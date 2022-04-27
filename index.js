@@ -64,8 +64,11 @@ const keys = Object.keys(circle4);
 // Check if a key exists in an object:
 if ('radius' in circle) {console.log("Yes, it exists")}
 
-// private properties
 
+// *IMPORTANT
+// Abstraction
+//
+// private properties
 function CirclePrivate(radius) {
   this.radius = radius;
 
@@ -75,14 +78,50 @@ function CirclePrivate(radius) {
   let = computerOptimumLocation = function(factor) {
     // ....
   }
-
   this.draw = function() {
     let x, y; //--> only in scope within this inner function
     computerOptimumLocation(0.1); // --> in closure with this inner function (from parent function)
 
     console.log('draw');
   }
-}
+};
 
 const circle5 = new CirclePrivate(10)
 circle5.draw()
+
+
+// *IMPORTANT
+// Get and Set
+//
+function CircleGetSet(radius) {
+  this.radius = radius;
+
+  let defaultLocation = { x: 0, y: 0 } // Cannot access it from the outside
+
+  this.getDefaultLocation = function () {
+    return defaultLocation;
+  };
+
+  this.draw = function() {
+    console.log('draw');
+  };
+
+  Object.defineProperty(this, 'defaultLocation', {
+    get: function() { 
+      return defaultLocation;
+    }, 
+    set: function(value) {
+      if (!value.x || !value.y) {
+        throw new Error("invalid location")
+      }
+      defaultLocation = value;
+    }
+  }); // ==> NEW
+};
+
+const circle6 = new CircleGetSet(10)
+// access property instead of a method
+//  instead of circle6.getDefaultLocation()
+circle6.defaultLocation
+circle6.draw()
+
