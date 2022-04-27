@@ -107,7 +107,7 @@ function CircleGetSet(radius) {
     console.log('draw');
   };
 
-  Object.defineProperty(this, 'defaultLocation', {
+  Object.defineProperty(this, 'defaultLocation', { // ==> NEW
     get: function() { 
       return defaultLocation;
     }, 
@@ -117,7 +117,7 @@ function CircleGetSet(radius) {
       }
       defaultLocation = value;
     }
-  }); // ==> NEW
+  }); 
 };
 
 const circle6 = new CircleGetSet(10)
@@ -135,6 +135,7 @@ circle6.draw()
 function Stopwatch() {
   let startCount = null;
   let endCount = null;
+  let duration = 0;
 
   this.start = () => {
     if (startCount) {
@@ -155,8 +156,9 @@ function Stopwatch() {
   };
   
   this.duration = () => {
-    let result = (endCount - startCount)/1000
-    console.log(result + " seconds");
+    duration = (endCount - startCount)/1000
+    console.log(duration + " seconds");
+    return duration + " seconds"
   }
 
   this.reset = () => {
@@ -166,6 +168,12 @@ function Stopwatch() {
     startCount = null;
     endCount = null;
   }
+
+  Object.defineProperty(this, 'duration', {
+    get: () => {
+      return duration;
+    }
+  })
 };
 
 const sw = new Stopwatch();
