@@ -26,6 +26,7 @@ const circle2 = createCircle(1)
 circle2.draw()
 
 //
+//
 // Constructor Function
 function Circle(radius) {
   this.radius = radius
@@ -125,3 +126,46 @@ const circle6 = new CircleGetSet(10)
 circle6.defaultLocation
 circle6.draw()
 
+
+
+
+// EXERCISE
+// Create a stopwatch with OOP
+
+function Stopwatch() {
+  let startCount = null;
+  let endCount = null;
+
+  this.start = () => {
+    if (startCount) {
+      throw new Error("Stopwatch already started")
+    }
+    startCount = new Date().getTime();
+    endCount = 0;
+  };
+
+  this.stop = () => {
+    if (!startCount) {
+      throw new Error("Start stopwatch first")
+    };
+    if (endCount) {
+      throw new Error("Stopwatch already stopped")
+    };
+    endCount = new Date().getTime();
+  };
+  
+  this.duration = () => {
+    let result = (endCount - startCount)/1000
+    console.log(result + " seconds");
+  }
+
+  this.reset = () => {
+    if (!startCount && !endCount) {
+      throw new Error("already resetted")
+    }
+    startCount = null;
+    endCount = null;
+  }
+};
+
+const sw = new Stopwatch();
